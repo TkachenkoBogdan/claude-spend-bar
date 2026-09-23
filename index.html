@@ -9,7 +9,7 @@
 <meta property="og:description" content="Your claude.ai usage, in the menu bar.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tkachenkobogdan.github.io/claude-spend-bar/">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><rect width='128' height='128' rx='26' fill='%230D1018'/><path d='M56.8 39.6 L36.5 82.6 M39.5 86.4 L86.9 79.6 M89.9 75.8 L60.7 37.9' fill='none' stroke='%23D97757' stroke-width='11' stroke-linecap='round'/></svg>">
+<link rel="icon" href="icon-128.png" sizes="128x128">
 <style>
   :root {
     --clay: #D97757;
@@ -33,28 +33,53 @@
     background: radial-gradient(1200px 600px at 50% -10%, var(--wall-top), var(--wall)) fixed;
     -webkit-font-smoothing: antialiased; line-height: 1.55;
   }
-  .wrap { max-width: 680px; margin: 0 auto; padding: 0 16px 80px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px 80px; }
 
   /* ---- header ---- */
   header { text-align: center; padding: 72px 0 40px; }
-  .mark { width: 76px; height: 76px; display: block; margin: 0 auto 22px; cursor: pointer; }
-  .mark .trine { transform-origin: 64px 64px; }
+  .mark { width: 88px; height: 88px; display: block; margin: 0 auto 22px; }
   h1 { font-size: 34px; letter-spacing: -.02em; margin: 0 0 8px; }
   .tag { color: var(--ink-2); font-size: 16px; margin: 0 auto; max-width: 30em; }
 
-  /* ---- menu-bar vignette ---- */
-  .bar {
-    margin: 30px auto 0; max-width: 420px;
-    background: rgba(255,255,255,.05); border: 1px solid var(--control-edge);
-    border-radius: 10px; padding: 7px 12px;
-    display: flex; align-items: center; gap: 16px; justify-content: flex-end;
-    font-size: 12.5px; color: var(--ink-2);
-    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  /* ---- menu-bar vignette: a real Mac menu bar, so the app's home is obvious ---- */
+  .barwrap { margin: 34px auto 0; max-width: 620px; }
+  .screen {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--control-edge);
+    box-shadow: 0 18px 44px rgba(0,0,0,.45);
+    background: linear-gradient(160deg, #3A2F4E 0%, #26304A 45%, #16202F 100%);
   }
-  .bar .spacer { margin-right: auto; color: var(--ink-3); font-weight: 600; }
-  .bar .item { display: flex; align-items: center; gap: 6px; color: var(--ink); }
-  .bar svg { display: block; }
-  .bar .dim { color: var(--ink-3); }
+  .menubar {
+    display: flex; align-items: center; gap: 0;
+    height: 30px; padding: 0 11px;
+    background: rgba(18,20,28,.55);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,.35);
+    font-size: 12.5px; color: rgba(255,255,255,.92);
+    white-space: nowrap;
+  }
+  .menubar .apple { width: 13px; height: 13px; margin-right: 13px; flex: 0 0 auto; opacity: .95; }
+  .menubar .app { flex: 0 0 auto; }
+  .menubar .app { font-weight: 700; }
+  .menubar .menus {
+    display: flex; gap: 14px; margin-left: 15px; color: rgba(255,255,255,.88);
+    min-width: 0; overflow: hidden; flex: 0 1 auto;
+  }
+  .menubar .right { margin-left: auto; padding-left: 16px; flex: 0 0 auto;
+                    display: flex; align-items: center; gap: 12px; }
+  .menubar .right svg { display: block; opacity: .92; }
+  /* our own status item: the mark, then the reading */
+  .menubar .ours { display: flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; }
+  .menubar .ours svg { display: block; }
+  .menubar .clock { font-variant-numeric: tabular-nums; }
+  /* the desktop below the bar, just enough to read as a screen */
+  .screen .desktop { height: 44px; }
+  .barcap { text-align: center; color: var(--ink-3); font-size: 12.5px; margin: 12px 0 0; }
+  .barcap b { color: var(--ink-2); font-weight: 600; }
+  @media (max-width: 560px) {
+    .menubar .menus { display: none; }
+  }
 
   /* ---- buttons ---- */
   .cta { margin: 32px 0 10px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
@@ -107,6 +132,21 @@
   }
   .way ol li { font-size: 13.5px; padding-bottom: 11px; }
 
+  /* ---- screenshots ---- */
+  .shots { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  /* The two panels are different heights, so the captions are pushed to a shared
+     bottom edge rather than each hanging off its own image. */
+  .shot { display: flex; }
+  .shot figure { margin: 0; display: flex; flex-direction: column; width: 100%; }
+  .shot figcaption { margin-top: auto; }
+  .shot img {
+    display: block; width: 100%; height: auto; border-radius: 12px;
+    border: 1px solid var(--control-edge);
+    box-shadow: 0 16px 38px rgba(0,0,0,.42);
+  }
+  .shot figcaption { color: var(--ink-3); font-size: 12.5px; padding-top: 12px; }
+  .shot figcaption b { color: var(--ink-2); font-weight: 600; }
+
   /* ---- copy field ---- */
   .copy { display: flex; align-items: stretch; gap: 0; margin: 0 0 12px; }
   .copy pre {
@@ -153,41 +193,68 @@
 <div class="wrap">
 
 <header>
-  <!-- The app's own mark, in its caught pose. Click it to make it turn. -->
-  <svg class="mark" id="mark" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"
-       role="img" aria-label="Claude Spend Bar">
-    <defs>
-      <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#2A2E3B"/><stop offset="1" stop-color="#0D1018"/>
-      </linearGradient>
-      <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#fff" stop-opacity=".16"/>
-        <stop offset=".35" stop-color="#fff" stop-opacity="0"/>
-      </linearGradient>
-      <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-        <feGaussianBlur stdDeviation="5"/>
-      </filter>
-    </defs>
-    <rect x="6" y="6" width="116" height="116" rx="26" fill="url(#wall)"/>
-    <rect x="6" y="6" width="116" height="116" rx="26" fill="url(#sheen)"/>
-    <rect x="6.5" y="6.5" width="115" height="115" rx="25.5" fill="none" stroke="#fff" stroke-opacity=".08"/>
-    <g opacity=".55" filter="url(#glow)"><g id="heroGlow"></g></g>
-    <g id="heroTrine"></g>
-  </svg>
+  <!-- The app's real icon, as the binary renders it into the bundle's iconset
+       (scripts/make-icon.sh). Not a recreation, and it does not move. -->
+  <img class="mark" src="icon@2x.png" width="512" height="512"
+       alt="Claude Spend Bar" fetchpriority="high">
 
   <h1>Claude Spend Bar</h1>
   <p class="tag">Your claude.ai usage, in the menu bar. How much of your session
      and weekly limits you have left, without opening a browser tab.</p>
 
-  <!-- A sketch of what lands in your menu bar. -->
-  <div class="bar" aria-hidden="true">
-    <span class="spacer">Claude Code</span>
-    <span class="dim">Thu 14:02</span>
-    <span class="item">
-      <svg id="barMark" width="17.6" height="14" viewBox="0 0 17.6 14"
-           xmlns="http://www.w3.org/2000/svg"></svg>
-      38%
-    </span>
+  <!-- Where the app actually lives: the right-hand end of your Mac's menu bar,
+       to the left of the clock, whatever app you happen to be in. -->
+  <div class="barwrap" aria-hidden="true">
+    <div class="screen">
+      <div class="menubar">
+        <svg class="apple" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M11.05 8.47c-.02-1.72 1.4-2.55 1.47-2.59-.8-1.17-2.05-1.33-2.5-1.35-1.06-.11-2.07.62-2.61.62-.54 0-1.37-.61-2.25-.59-1.16.02-2.23.67-2.83 1.71-1.21 2.09-.31 5.19.87 6.89.58.83 1.26 1.76 2.16 1.73.87-.04 1.2-.56 2.25-.56s1.35.56 2.27.54c.94-.02 1.53-.85 2.1-1.68.66-.96.93-1.9.95-1.95-.02-.01-1.82-.7-1.84-2.77zM9.33 3.4c.48-.58.8-1.39.71-2.2-.69.03-1.52.46-2.02 1.04-.44.51-.83 1.34-.73 2.13.77.06 1.56-.39 2.04-.97z"/>
+        </svg>
+        <span class="app">Safari</span>
+        <span class="menus">
+          <span>File</span><span>Edit</span><span>View</span>
+          <span>History</span><span>Window</span><span>Help</span>
+        </span>
+
+        <span class="right">
+          <!-- battery -->
+          <svg width="25" height="13" viewBox="0 0 25 13" fill="none">
+            <rect x=".6" y="1.6" width="19" height="9.8" rx="3" stroke="currentColor" stroke-opacity=".55"/>
+            <rect x="2.2" y="3.2" width="12" height="6.6" rx="1.6" fill="currentColor"/>
+            <path d="M21.2 5v3.5a2.4 2.4 0 0 0 0-3.5z" fill="currentColor" fill-opacity=".55"/>
+          </svg>
+          <!-- wi-fi: three arcs of a common centre over a dot, drawn to the same
+               proportions as the system symbol rather than copied from it -->
+          <svg width="18" height="13" viewBox="0 0 18 13" fill="none"
+               stroke="currentColor" stroke-width="1.55" stroke-linecap="round">
+            <path d="M1.91 6.57A8.55 8.55 0 0 1 16.09 6.57"/>
+            <path d="M4.23 8.13A5.75 5.75 0 0 1 13.77 8.13"/>
+            <path d="M6.55 9.70A2.95 2.95 0 0 1 11.45 9.70"/>
+            <circle cx="9.00" cy="11.35" r="0.96" fill="currentColor" stroke="none"/>
+          </svg>
+          <!-- control centre -->
+          <svg width="15" height="13" viewBox="0 0 15 13" fill="none" stroke="currentColor"
+               stroke-width="1.35" stroke-linecap="round">
+            <path d="M1.6 4.2h1.9M7.1 4.2h6.3"/>
+            <path d="M1.6 8.8h6.3M11.5 8.8h1.9"/>
+            <circle cx="5.3" cy="4.2" r="1.6"/>
+            <circle cx="9.7" cy="8.8" r="1.6"/>
+          </svg>
+
+          <!-- this app. It sits here, just left of the clock. -->
+          <span class="ours">
+            <svg id="barMark" width="17.6" height="14" viewBox="0 0 17.6 14"
+                 xmlns="http://www.w3.org/2000/svg"></svg>
+            <span>38%</span>
+          </span>
+
+          <span class="clock">Thu 14:02</span>
+        </span>
+      </div>
+      <div class="desktop"></div>
+    </div>
+    <p class="barcap">That is the whole app: the clay triangle and a percentage, just
+       left of the clock. <b>Click it for the rest.</b></p>
   </div>
 
   <p class="cta">
@@ -197,8 +264,39 @@
     </a>
     <a class="btn btn-ghost" href="#homebrew">Install with Homebrew</a>
   </p>
-  <p class="meta">macOS 14 or later · Apple Silicon · signed and notarised by Apple</p>
+  <p class="meta">macOS 14 or later · Apple Silicon · free</p>
 </header>
+
+<section class="reveal" id="look">
+  <h2>What you get when you click it</h2>
+  <p class="lede">A panel under the menu bar. Nothing else — no window, no Dock icon.
+     Which of the two you see depends on how your Claude account is billed.</p>
+  <div class="shots">
+    <div class="shot">
+      <figure>
+        <img src="popover@2x.png" width="680" height="614" loading="lazy"
+             alt="The panel on a subscription: an organisation picker, then Session 54%,
+                  Weekly 28% and Weekly Fable 30%, each with a meter and a reset time.">
+        <figcaption><b>On a subscription.</b> One row per limit, with how much is
+          left and when it resets. The session — the one that moves during a
+          working day — is the coloured one.</figcaption>
+      </figure>
+    </div>
+    <div class="shot">
+      <figure>
+        <img src="ledger@2x.png" width="680" height="748" loading="lazy"
+             alt="The panel on a spend limit: $189.42 of $300, $110.58 left this cycle,
+                  63% used, and a tape of the five most recent charges.">
+        <figcaption><b>On a spend limit.</b> What you have run up this cycle, what
+          is left, and a tape of what each of the last few charges added.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <p class="note" style="margin-top:16px">The weekly meters follow your Mac's accent
+     colour, so they will not necessarily be blue on your machine. Both panels have
+     a settings view behind the gear: how often it polls, a shortcut to open the
+     panel from anywhere, and where the session key goes.</p>
+</section>
 
 <section class="reveal" id="install">
   <h2>Installing</h2>
@@ -427,18 +525,12 @@
       }).join('');
     }
 
-    var hero = document.getElementById('heroTrine');
-    var glow = document.getElementById('heroGlow');
     var bar = document.getElementById('barMark');
 
-    function paint() {
-      // The icon's own geometry: r = 0.24 x side, on the 128 tile.
-      var big = marks(64, 64, 30.7);
-      hero.innerHTML = big;
-      glow.innerHTML = big;
-      // The menu bar's: slot 15.6 wide plus a 2 pt gap, mark at r 6.5.
-      bar.innerHTML = marks(7.8, 7, 6.5);
-    }
+    // The only mark that moves on this page. The icon above is a still image, as
+    // an app icon should be; this is the menu bar's own slot — 15.6 wide plus a
+    // 2 pt gap, mark at r 6.5 — turning the way the real one does.
+    function paint() { bar.innerHTML = marks(7.8, 7, 6.5); }
 
     if (reduce) { paint(); return; }           // still, at rest, and no frames
 
@@ -456,12 +548,6 @@
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
-
-    // Clicking the mark starts a turn straight away.
-    document.getElementById('mark').addEventListener('click', function () {
-      var now = performance.now();
-      if (phase === 'idle') { begin(now); working = true; nextAt = now + WORK_MS; }
-    });
   })();
 </script>
 </body>
