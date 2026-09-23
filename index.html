@@ -126,10 +126,6 @@
   }
   .way h3 { font-size: 14px; margin: 0 0 2px; display: flex; align-items: center; gap: 8px; }
   .way .for { color: var(--ink-3); font-size: 12.5px; margin: 0 0 14px; }
-  .pill {
-    font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
-    color: var(--live); background: rgba(62,214,183,.12); border-radius: 20px; padding: 3px 8px;
-  }
   .way ol li { font-size: 13.5px; padding-bottom: 11px; }
 
   /* ---- screenshots ---- */
@@ -264,7 +260,7 @@
     </a>
     <a class="btn btn-ghost" href="#homebrew">Install with Homebrew</a>
   </p>
-  <p class="meta">Version 1.4.3 · macOS 14 or later · Apple Silicon · free</p>
+  <p class="meta">Version 1.5.0 · macOS 14 or later · Apple Silicon · free</p>
 </header>
 
 <section class="reveal" id="look">
@@ -297,7 +293,8 @@
 <section class="reveal" id="install">
   <h2>Installing</h2>
   <p class="lede">Two ways in. They install the same app — pick whichever you are
-     comfortable with.</p>
+     comfortable with. Either way it keeps itself up to date: new versions
+     download in the background and install while the panel is closed.</p>
 
   <div class="ways">
     <div class="way">
@@ -310,17 +307,17 @@
         <li>Open your <b>Applications</b> folder and double-click
             <b>Claude Spend Bar</b>.</li>
       </ol>
-      <p class="note">The disk image does not update itself — download it again
-         for a new version.</p>
+      <p class="note">Nothing to download again — the app updates itself.</p>
     </div>
     <div class="way" id="homebrew">
-      <h3>Homebrew <span class="pill">updates itself</span></h3>
+      <h3>Homebrew</h3>
       <p class="for">If you already use <code>brew</code>.</p>
       <div class="copy">
         <pre><code id="cmd-install">brew install --cask tkachenkobogdan/tap/claude-spend-bar</code></pre>
         <button type="button" data-copy="cmd-install">Copy</button>
       </div>
-      <p class="note">Later versions arrive with:</p>
+      <p class="note">On 1.4.3 or earlier? Upgrade once by hand; from 1.5.0 on it
+         updates itself:</p>
       <div class="copy" style="margin-top:8px">
         <pre><code id="cmd-upgrade">brew upgrade --cask claude-spend-bar</code></pre>
         <button type="button" data-copy="cmd-upgrade">Copy</button>
